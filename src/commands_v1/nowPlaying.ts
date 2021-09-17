@@ -1,7 +1,7 @@
 "use strict";
-const Discord = require("discord.js");
-const { clientRedis } = require("../utils/redis");
-const { SlashCommandBuilder } = require("@discordjs/builders");
+import Discord = require("discord.js");
+import { clientRedis } from "../utils/redis";
+import { SlashCommandBuilder } from "@discordjs/builders";
 
 module.exports = {
   name: "nowplaying",

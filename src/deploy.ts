@@ -1,8 +1,7 @@
-"use strict";
-const { REST } = require("@discordjs/rest");
-const { Routes } = require("discord-api-types/v9");
-const { token, clientID } = require("./config.json");
-const fs = require("fs");
+import { REST } from "@discordjs/rest";
+import { Routes } from "discord-api-types/v9";
+import { token, clientID } from "../config.json";
+import * as fs from "fs";
 
 const commands = [];
 const commandFiles = fs

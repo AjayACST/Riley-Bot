@@ -1,7 +1,6 @@
-"use strict";
-const { inviteLink } = require("../config.json"); //skipcq: JS-0266
-const Discord = require("discord.js");
-const { SlashCommandBuilder } = require("@discordjs/builders");
+import { inviteLink } from "../../config.json";
+import Discord from "discord.js";
+import { SlashCommandBuilder } from "@discordjs/builders";
 
 module.exports = {
   name: "invite",

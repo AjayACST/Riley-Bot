@@ -1,22 +1,26 @@
-"use strict";
-const Discord = require("discord.js");
-const { SlashCommandBuilder } = require("@discordjs/builders");
+import { SlashCommandBuilder } from "@discordjs/builders";
+import { CommandInteraction } from "discord.js";
+import { Command } from "../types/Command";
 
-module.exports = {
-  name: "help",
-  description: "List's all available commands and info for the commands.",
-  usage: "[command name]",
-  data: new SlashCommandBuilder()
-    .setName("help")
-    .setDescription("List's all available commands and info for the commands.")
+export default class Help extends Command {
+  name: "help";
+  description: "List's all available commands and info for the commands.";
+  usage: "[command name]";
+  args = true;
+  guildOnly = false;
+  voice = false;
+
+  data = new SlashCommandBuilder()
+    .setName(this.name)
+    .setDescription(this.description)
     .addStringOption((option) =>
       option
         .setName("command")
         .setDescription("Name of the command you want help for.")
-    ),
-  execute(interaction) {
-    const { commands } = interaction.client;
+    );
 
+  execute = async (interaction: CommandInteraction) => {
+    const { commands } = interaction.client;
     const commandHelp = interaction.options.get("command");
 
     if (!commandHelp) {
@@ -30,7 +34,7 @@ module.exports = {
         .setDescription(
           `Below are all avilable commands for ${interaction.client.user.username}`
         );
-      commands.forEach((command) => {
+      commands.forEach((command: Command) => {
         if (!command.usage) {
           helpEmbed.addField(`/${command.name}`, command.description);
         } else {
@@ -41,26 +45,26 @@ module.exports = {
         }
       });
 
-      return interaction.user
-        .send({ embeds: [helpEmbed] })
-        .then(() => {
-          if (interaction.channel.type === "dm") {
-            return;
-          }
-          interaction.editReply("I've sent you a DM with all my commands!");
-        })
-        .catch((error) => {
-          interaction.editReply(
-            "it seems like I can't DM you! Do you have DMs disabled?"
-          );
-        });
+      await interaction.user.send({ embeds: [helpEmbed] });
+      if (interaction.channel.type === "DM") {
+        return;
+      }
+      try {
+        interaction.editReply("I've sent you a DM with all my commands!");
+      } catch (_error: any) {
+        interaction.editReply(
+          "it seems like I can't DM you! Do you have DMs disabled?"
+        );
+      }
+      return;
     }
 
     const name = commandHelp.value;
     const command = commands.get(name);
 
     if (!command) {
-      return interaction.editReply("That's not a valid command!");
+      interaction.editReply("That's not a valid command!");
+      return;
     }
 
     const helpCommandEmbed = new Discord.MessageEmbed()
@@ -83,5 +87,5 @@ module.exports = {
     }
 
     interaction.editReply({ embeds: [helpCommandEmbed] });
-  },
-};
+  };
+}

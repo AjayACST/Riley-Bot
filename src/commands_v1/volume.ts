@@ -1,6 +1,5 @@
-"use strict";
-const Discord = require("discord.js");
-const { SlashCommandBuilder } = require("@discordjs/builders");
+import * as Discord from "discord.js";
+import { SlashCommandBuilder } from "@discordjs/builders";
 
 module.exports = {
   name: "volume",

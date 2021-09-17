@@ -15,11 +15,11 @@
     }
   ],
   "redisIP": "redis",
-  "redisPort": "6379",
+  "redisPort": 6379,
   "redisPassword": "",
   "sentryDSN": "",
   "sentryEnv": "dev",
   "spotifyClientID": "",
   "spotifyClientSecret": "",
-  "clientId": "Discord Client ID"
+  "clientID": "Discord Client ID"
 }
